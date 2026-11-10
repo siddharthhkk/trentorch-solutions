@@ -53,13 +53,11 @@ def apply_householder(v, a):
     v_norm_sq = np.dot(v, v)
     if np.isclose(v_norm_sq, 0.0):
         return a.copy().astype(float)
+        
     if a.ndim == 1:
-        # Vector case: v^T a is a scalar
         v_dot_a = np.dot(v, a)
         return a - (2.0 / v_norm_sq) * v_dot_a * v
     else:
-        # Matrix case: v^T a is a 1D array of dot products for each column
-        v_dot_a = np.dot(v, a)  # Shape: (cols,)
-        # Reshape v to (rows, 1) and v_dot_a to (1, cols) to use broadcasting
+        v_dot_a = np.dot(v, a)
         return a - (2.0 / v_norm_sq) * v[:, np.newaxis] * v_dot_a[np.newaxis, :]
     pass
